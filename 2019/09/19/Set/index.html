@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Set | wutian的小破站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[TOC] 特性没有重复元素 Set实现6个实现类，2个接口 HashSet保持不重复的对象（可以是任意的，不用统一）底层使用hashmap实现，存对象为键（保证不重复），值为标志位遍历使用hashmap的 map.keySet().iterator(); 方法常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）并发：不同步、线程不安全、迭代器快速失效 LinkedHashS">
+<meta name="keywords" content="集合,Set">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Set">
+<meta property="og:url" content="http://yoursite.com/2019/09/19/Set/index.html">
+<meta property="og:site_name" content="wutian的小破站">
+<meta property="og:description" content="[TOC] 特性没有重复元素 Set实现6个实现类，2个接口 HashSet保持不重复的对象（可以是任意的，不用统一）底层使用hashmap实现，存对象为键（保证不重复），值为标志位遍历使用hashmap的 map.keySet().iterator(); 方法常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）并发：不同步、线程不安全、迭代器快速失效 LinkedHashS">
+<meta property="og:locale" content="CN">
+<meta property="og:image" content="en-resource://database/1532:1">
+<meta property="og:image" content="en-resource://database/1536:1">
+<meta property="og:image" content="en-resource://database/1534:1">
+<meta property="og:image" content="en-resource://database/1538:0">
+<meta property="og:image" content="en-resource://database/1542:0">
+<meta property="og:updated_time" content="2019-09-19T14:35:18.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Set">
+<meta name="twitter:description" content="[TOC] 特性没有重复元素 Set实现6个实现类，2个接口 HashSet保持不重复的对象（可以是任意的，不用统一）底层使用hashmap实现，存对象为键（保证不重复），值为标志位遍历使用hashmap的 map.keySet().iterator(); 方法常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）并发：不同步、线程不安全、迭代器快速失效 LinkedHashS">
+<meta name="twitter:image" content="en-resource://database/1532:1">
+  
+    <link rel="alternate" href="/atom.xml" title="wutian的小破站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wutian的小破站</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Set" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/19/Set/" class="article-date">
+  <time datetime="2019-09-19T14:32:52.000Z" itemprop="datePublished">2019-09-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java基础/">java基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Set
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>没有重复元素</p>
+<h3 id="Set实现"><a href="#Set实现" class="headerlink" title="Set实现"></a>Set实现</h3><p><img src="en-resource://database/1532:1" alt="1abc80d2d08e303c5ab69d9c5fdf0f3e.png"><br>6个实现类，2个接口</p>
+<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p><img src="en-resource://database/1536:1" alt="a392f32129c1edb88d9d1a26edbafa45.png"><br>保持不重复的对象（可以是任意的，不用统一）<br>底层使用hashmap实现，存对象为键（保证不重复），值为标志位<br>遍历使用hashmap的 <em>map.keySet().iterator();</em> 方法<br>常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）<br>并发：不同步、线程不安全、迭代器快速失效</p>
+<h4 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h4><p><img src="en-resource://database/1534:1" alt="6caa1471e96464e2d816219b96e28d51.png"></p>
+<p>底层使用LinkedHashMap实现<br>链表使用双向链表实现（有序）</p>
+<p>用于有序消除重复元素（重写hashcode与equal）<br>并发：不同步、线程不安全、迭代器快速失效</p>
+<h4 id="CopyOnWriteArraySet"><a href="#CopyOnWriteArraySet" class="headerlink" title="CopyOnWriteArraySet"></a>CopyOnWriteArraySet</h4><p>底层使用CopyOnWriteArrayList实现<br>不适用于大量查找和插入操作<br>适用于：白名单，黑名单，商品类目的访问和更新场景</p>
+<p>并发：线程安全、读写分离迭代器</p>
+<h4 id="EnumSet"><a href="#EnumSet" class="headerlink" title="EnumSet"></a>EnumSet</h4><p><strong>初始化</strong><br>enumset为抽象类，不可直接new<br>底层使用RegularEnumSet（long-64），或者JumboEnumSet（long数组）如果枚举值个数小于等于64，则静态工厂方法中创建的就是RegularEnumSet，大于64的话就是JumboEnumSet。<br><strong>静态构造函数</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;E extends Enum&lt;E&gt;&gt; <span class="function">EnumSet&lt;E&gt; <span class="title">of</span><span class="params">(E first, E... rest)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing the specified elements</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">range</span><span class="params">(E from, E to)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all of the elements in</span></span></span><br><span class="line"><span class="function"><span class="comment">// the range defined by the two specified endpoints</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">allOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all elements in elementType</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">noneOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set of elementType, initially empty</span></span></span><br></pre></td></tr></table></figure>
+
+<p>适用于求 交集、并集、补集</p>
+<h3 id="有序Set和巡航Set"><a href="#有序Set和巡航Set" class="headerlink" title="有序Set和巡航Set"></a>有序Set和巡航Set</h3><h4 id="SortSet接口"><a href="#SortSet接口" class="headerlink" title="SortSet接口"></a>SortSet接口</h4><p><img src="en-resource://database/1538:0" alt="01d6f8c763b2a1d84f4fdf7f130465cc.png"><br>实现类为TreeSet</p>
+<h5 id="获取第一个和最后一个元素"><a href="#获取第一个和最后一个元素" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">first</span><span class="params">()</span> <span class="comment">// return the first element in the set</span></span></span><br><span class="line"><span class="function">E <span class="title">last</span><span class="params">()</span> <span class="comment">// return the last element in the set</span></span></span><br></pre></td></tr></table></figure>
+
+<h5 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;? <span class="keyword">super</span> E&gt; comparator()</span><br></pre></td></tr></table></figure>
+
+<h5 id="获取范围视图"><a href="#获取范围视图" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取大于等于fromElement,小于toElement</span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取小于toElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取大于等于fromElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement)</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="NavigableSet接口"><a href="#NavigableSet接口" class="headerlink" title="NavigableSet接口"></a>NavigableSet接口</h4><p><img src="en-resource://database/1542:0" alt="f2fbe9232cde309279fddfef7ceb5559.png"></p>
+<h5 id="获取第一个和最后一个元素-1"><a href="#获取第一个和最后一个元素-1" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">pollFirst</span><span class="params">()</span> <span class="comment">// retrieve and remove the first (lowest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br><span class="line"><span class="function">E <span class="title">pollLast</span><span class="params">()</span> <span class="comment">// retrieve and remove the last (highest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br></pre></td></tr></table></figure>
+
+<h5 id="获取范围视图-1"><a href="#获取范围视图-1" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> fromInclusive,E toElement, <span class="keyword">boolean</span> toInclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br></pre></td></tr></table></figure>
+
+<h5 id="获取最近比配的数据"><a href="#获取最近比配的数据" class="headerlink" title="获取最近比配的数据"></a>获取最近比配的数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">ceiling</span><span class="params">(E e)</span> <span class="comment">// return the least element in this set greater than</span></span></span><br><span class="line"><span class="function"><span class="comment">// or equal to e, or null if there is no such element（大于等于）</span></span></span><br><span class="line"><span class="function">E <span class="title">floor</span><span class="params">(E e)</span> <span class="comment">// return the greatest element in this set less than</span></span></span><br><span class="line"><span class="function"><span class="comment">// or equal to e, or null if there is no such element（小于等于）</span></span></span><br><span class="line"><span class="function">E <span class="title">higher</span><span class="params">(E e)</span> <span class="comment">// return the least element in this set strictly</span></span></span><br><span class="line"><span class="function"><span class="comment">// greater than e, or null if there is no such element（大于）</span></span></span><br><span class="line"><span class="function">E <span class="title">lower</span><span class="params">(E e)</span> <span class="comment">// return the greatest element in this set strictly</span></span></span><br><span class="line"><span class="function"><span class="comment">// less than e, or null if there is no such element（小于）</span></span></span><br></pre></td></tr></table></figure>
+
+<h5 id="导航反转有序数"><a href="#导航反转有序数" class="headerlink" title="导航反转有序数"></a>导航反转有序数</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">descendingSet</span><span class="params">()</span> <span class="comment">// return a reverse-order view of</span></span></span><br><span class="line"><span class="function"><span class="comment">// the elements in this set</span></span></span><br><span class="line"><span class="function">Iterator&lt;E&gt; <span class="title">descendingIterator</span><span class="params">()</span> <span class="comment">// return a reverse-order iterator</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>底层算法使用 红黑树<br>使用TreeMap类实现</p>
+<p>并发：不同步、线程不安全、迭代器快速失效</p>
+<h4 id="ConcurrentSkipListSet"><a href="#ConcurrentSkipListSet" class="headerlink" title="ConcurrentSkipListSet"></a>ConcurrentSkipListSet</h4><h3 id="Set的比较实现"><a href="#Set的比较实现" class="headerlink" title="Set的比较实现"></a>Set的比较实现</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/19/Set/" data-id="ck0qt7wh20000wkwk30nb0eil" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Set/">Set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/09/hexo-command/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hexo command</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java基础/">java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/备忘录/">备忘录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Set/">Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Set/" style="font-size: 10px;">Set</a> <a href="/tags/demo/" style="font-size: 10px;">demo</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/19/Set/">Set</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/hexo-command/">hexo command</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 wutian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
