@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>List | wutian的小破站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[TOC] List方法 位置访问方法123456void add(int index, E e) // add element e at given indexboolean addAll(int index, Collection&amp;lt;? extends E&amp;gt; c)// add contents of c at given indexE get(int index) // return">
+<meta name="keywords" content="集合,List">
+<meta property="og:type" content="article">
+<meta property="og:title" content="List">
+<meta property="og:url" content="http://yoursite.com/2019/09/23/List/index.html">
+<meta property="og:site_name" content="wutian的小破站">
+<meta property="og:description" content="[TOC] List方法 位置访问方法123456void add(int index, E e) // add element e at given indexboolean addAll(int index, Collection&amp;lt;? extends E&amp;gt; c)// add contents of c at given indexE get(int index) // return">
+<meta property="og:locale" content="CN">
+<meta property="og:image" content="en-resource://database/1558:1">
+<meta property="og:image" content="en-resource://database/1560:1">
+<meta property="og:image" content="en-resource://database/1562:1">
+<meta property="og:updated_time" content="2019-09-23T14:58:21.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="List">
+<meta name="twitter:description" content="[TOC] List方法 位置访问方法123456void add(int index, E e) // add element e at given indexboolean addAll(int index, Collection&amp;lt;? extends E&amp;gt; c)// add contents of c at given indexE get(int index) // return">
+<meta name="twitter:image" content="en-resource://database/1558:1">
+  
+    <link rel="alternate" href="/atom.xml" title="wutian的小破站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wutian的小破站</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-List" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/23/List/" class="article-date">
+  <time datetime="2019-09-23T14:56:47.000Z" itemprop="datePublished">2019-09-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java基础/">java基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      List
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h3 id="List方法"><a href="#List方法" class="headerlink" title="List方法"></a>List方法</h3><p><img src="en-resource://database/1558:1" alt="949b13fc65267faa92b6eca901d5b9aa.png"></p>
+<h4 id="位置访问方法"><a href="#位置访问方法" class="headerlink" title="位置访问方法"></a>位置访问方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> <span class="comment">// add element e at given index</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span></span></span><br><span class="line"><span class="function"><span class="comment">// add contents of c at given index</span></span></span><br><span class="line"><span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="comment">// return element with given index</span></span></span><br><span class="line"><span class="function">E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="comment">// remove element with given index</span></span></span><br><span class="line"><span class="function">E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E e)</span> <span class="comment">// replace element with given index by e</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(Object o)</span> <span class="comment">// return index of first occurrence of o</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(Object o)</span> <span class="comment">// return index of last occurrence of o</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="范围查看"><a href="#范围查看" class="headerlink" title="范围查看"></a>范围查看</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;E&gt; <span class="title">subList</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span></span></span><br><span class="line"><span class="function"><span class="comment">// return a view of a portion of the list</span></span></span><br></pre></td></tr></table></figure>
+
+<p>ps:subList返回视图，对视图的修改会作用与母List，<br>若对母List做修改，访问子视图会报ConcurrentModificationException</p>
+<h4 id="List迭代器"><a href="#List迭代器" class="headerlink" title="List迭代器"></a>List迭代器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> <span class="comment">// return a ListIterator for this list,</span></span></span><br><span class="line"><span class="function"><span class="comment">// initially positioned at index 0</span></span></span><br><span class="line"><span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">(<span class="keyword">int</span> indx)</span></span></span><br><span class="line"><span class="function"><span class="comment">// return a ListIterator for this list,</span></span></span><br><span class="line"><span class="function"><span class="comment">// initially positioned at index indxs</span></span></span><br></pre></td></tr></table></figure>
+
+<p>ListIterator新增加的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span></span>; <span class="comment">// 在游标 前面 插入一个元素（注意，是前面）</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasPrevious</span><span class="params">()</span></span>; <span class="comment">// 判断游标前面是否有元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">nextIndex</span><span class="params">()</span></span>; <span class="comment">// 返回游标后边元素的索引位置，初始为 0 </span></span><br><span class="line"><span class="function">E <span class="title">previous</span><span class="params">()</span></span>; <span class="comment">// 返回游标前面的元素，同时游标前移一位。游标前没有元素就报 java.util.NoSuchElementException 的错</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">previousIndex</span><span class="params">()</span></span>; <span class="comment">// 返回游标前面元素的位置，初始时为 -1，同时报 java.util.NoSuchElementException 错;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(E e)</span></span>; <span class="comment">// r更新迭代器最后一次操作的元素为 E，也就是更新最后一次调用 next() 或者 previous() 返回的元素。当没有迭代，也就是没有调用 next() 或者 previous() 直接调用 set 时会报 java.lang.IllegalStateException 错</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="List实现"><a href="#List实现" class="headerlink" title="List实现"></a>List实现</h3><p><img src="en-resource://database/1560:1" alt="199b556ca7baef5ceceb7a4a6ee3bc13.png"></p>
+<h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><p>get、set快<br>remove、insert慢<br>初始化空间：默认10，复制其他数组（开辟该数组空间的）110%<br>扩展（原数组大小+原数组大小/2）</p>
+<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><p>末尾以外的地方添加、删除快<br>大量查找（随机访问）慢</p>
+<h4 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h4><p>写时复制，适用于读多写少</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addIfAbsent()<span class="comment">//添加元素如果不存在</span></span><br></pre></td></tr></table></figure>
+
+<p>线程安全</p>
+<h3 id="List实现对比"><a href="#List实现对比" class="headerlink" title="List实现对比"></a>List实现对比</h3><p><img src="en-resource://database/1562:1" alt="f3d5f7868e67ab4fc2a49fa458c6f283.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/23/List/" data-id="ck0wjdc0w0000aowk9n84yu2n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/List/">List</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/19/Set/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Set</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java基础/">java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/备忘录/">备忘录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Set/">Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/List/" style="font-size: 10px;">List</a> <a href="/tags/Set/" style="font-size: 10px;">Set</a> <a href="/tags/demo/" style="font-size: 10px;">demo</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/集合/" style="font-size: 20px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/23/List/">List</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/19/Set/">Set</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/hexo-command/">hexo command</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 wutian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
