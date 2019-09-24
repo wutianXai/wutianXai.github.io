@@ -1,540 +1,1249 @@
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="CN">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
 
-  
-  <title>wutian的小破站</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="wutian的小破站">
-<meta property="og:url" content="http://yoursite.com/index.html">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="集合,Map,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
+<meta name="keywords" content="集合,Map">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Map">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/Map/index.html">
 <meta property="og:site_name" content="wutian的小破站">
+<meta property="og:description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
 <meta property="og:locale" content="CN">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/Map.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/the_structure_of_map_implementation.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/hashmap_and_weakhashmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/resolving_collision_by_linear_probing.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/navigablemap.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/concurrentnavigablemap.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/comparative.png">
+<meta property="og:updated_time" content="2019-09-24T15:14:19.539Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wutian的小破站">
+<meta name="twitter:title" content="Map">
+<meta name="twitter:description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/24/Map/Map.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/24/Map/">
+
+
+
+
+
+  <title>wutian的小破站</title>
   
-    <link rel="alternate" href="/atom.xml" title="wutian的小破站" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+
+
 </head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">wutian的小破站</a>
-      </h1>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wutian的小破站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-Map" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/09/24/Map/" class="article-date">
-  <time datetime="2019-09-24T14:01:49.000Z" itemprop="datePublished">2019-09-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java基础/">java基础</a>
+        <p class="site-subtitle"></p>
+      
   </div>
 
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/24/Map/">Map</a>
-    </h1>
+</div>
+
+<nav class="site-nav">
   
 
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/24/Map/" itemprop="url">Map</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-24T22:01:49+08:00">2019-09-24</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>[TOC]</p>
+      
+
+      
+        
+          <p>[TOC]</p>
 <h3 id="Map特性"><a href="#Map特性" class="headerlink" title="Map特性"></a>Map特性</h3><p>键值对<br>不继承Collection<br>键唯一</p>
 <h3 id="Map方法"><a href="#Map方法" class="headerlink" title="Map方法"></a>Map方法</h3><p><img src="/2019/09/24/Map/Map.png" alt="Map.png"></p>
-<h4 id="添加联系"><a href="#添加联系" class="headerlink" title="添加联系"></a>添加联系</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">V <span class="title">put</span><span class="params">(K key, V value)</span> <span class="comment">// add or replace a key-value association</span></span></span><br><span class="line"><span class="function"><span class="comment">// return the old value (may be null) if the</span></span></span><br><span class="line"><span class="function"><span class="comment">// key was present; otherwise returns null</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K,? extends V&gt; m)</span></span></span><br><span class="line"><span class="function"><span class="comment">// add each of the key-value associations in</span></span></span><br><span class="line"><span class="function"><span class="comment">// the supplied map into the receiver</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">putIfAbsent</span><span class="params">(K key, V value)</span><span class="comment">//若key对应的value存在，返回；若不存在，设置为给定的值（1.8）</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="移除联系"><a href="#移除联系" class="headerlink" title="移除联系"></a>移除联系</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> <span class="comment">// remove all associations from this map</span></span></span><br><span class="line"><span class="function">V <span class="title">remove</span><span class="params">(Object key)</span> <span class="comment">// remove the association, if any, with the</span></span></span><br><span class="line"><span class="function"><span class="comment">// given key; returns the value with which it</span></span></span><br><span class="line"><span class="function"><span class="comment">// was associated, or null</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object key, Object value)</span> <span class="comment">//若key关联的value等于给定的值，则移除这个元素</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="查询Map内容"><a href="#查询Map内容" class="headerlink" title="查询Map内容"></a>查询Map内容</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">V <span class="title">get</span><span class="params">(Object k)</span> <span class="comment">// return the value corresponding to k, or</span></span></span><br><span class="line"><span class="function"><span class="comment">// null if k is not present as a key</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object k)</span> <span class="comment">// return true if k is present as a key</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object v)</span> <span class="comment">// return true if v is present as a value</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> <span class="comment">// return the number of associations</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> <span class="comment">// return true if there are no associations</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">getOrDefault</span><span class="params">(Object key, V defaultValue)</span><span class="comment">//若存在key，返回value；若不存在，返回给定值（1.8）</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(BiConsumer&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V&gt; action)</span><span class="comment">//遍历所有Entry，接受K，V（1.8）</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="修改（1-8添加）"><a href="#修改（1-8添加）" class="headerlink" title="修改（1.8添加）"></a>修改（1.8添加）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; </span></span></span><br><span class="line"><span class="function"><span class="params">function)</span><span class="comment">//替换Map中所有Entry的value值,例如map.replaceAll((key,value)-&gt;(key+1)+value);</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">replace</span><span class="params">(K key, V oldValue, V newValue)</span><span class="comment">//若key关联的旧值等于oldvalue,则改为新值</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">replace</span><span class="params">(K key, V value)</span><span class="comment">//若存在key，则替换为value</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">computeIfAbsent</span><span class="params">(K key,Function&lt;? <span class="keyword">super</span> K, ? extends V&gt; mappingFunction)</span><span class="comment">//若key存在，输出value；若不存在，通过指定 K-&gt;V 存入键值对</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">computeIfPresent</span><span class="params">(K key,BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span><span class="comment">//若key存在，通过指定K-&gt;V 更新键值对，若值为null，移除该key</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">compute</span><span class="params">(K key,        BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span><span class="comment">//用于添加或修改，是上两个方法的结合</span></span></span><br><span class="line"><span class="function"><span class="keyword">default</span> V <span class="title">merge</span><span class="params">(K key, V value,BiFunction&lt;? <span class="keyword">super</span> V, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span><span class="comment">//若key不存在，指定给定的value；若key存在，根据(K,V)-&gt;V计算出新值，若新值为null，则删除key</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="提供keys、Values、Associations视图"><a href="#提供keys、Values、Associations视图" class="headerlink" title="提供keys、Values、Associations视图"></a>提供keys、Values、Associations视图</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet() <span class="comment">// return a Set view of the associations</span></span><br><span class="line"><span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> <span class="comment">// return a Set view of the keys</span></span></span><br><span class="line"><span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span> <span class="comment">// return a Collection view of the values</span></span></span><br></pre></td></tr></table></figure>
-
-<p>视图与原集合是有关联的</p>
-<p>ps：清空HashMap  O（n）时间复杂度<br> clients.removeAll(Collections.singleton(acme));</p>
-<h3 id="Map的实现"><a href="#Map的实现" class="headerlink" title="Map的实现"></a>Map的实现</h3><p><img src="/2019/09/24/Map/the_structure_of_map_implementation.png" alt="the_structure_of_map_implementation.png"></p>
-<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><h5 id="hashmap构造"><a href="#hashmap构造" class="headerlink" title="hashmap构造"></a>hashmap构造</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span></span></span><br></pre></td></tr></table></figure>
-
-<p><strong>容量确定</strong><br>默认16<br>HashMap的bucket 数组大小一定是2的幂，若不是，寻找最近的的2的幂<br>该算法让最高位的1后面的位全变为1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//|=：n与后面的数做或运算</span></span><br><span class="line"><span class="comment">//&gt;&gt;&gt;:无符号右移</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> cap)</span> </span>&#123;   </span><br><span class="line">    <span class="keyword">int</span> n = cap - <span class="number">1</span>;    </span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">1</span>;   </span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">2</span>;   </span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">4</span>;   </span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">8</span>;   </span><br><span class="line">    n |= n &gt;&gt;&gt; <span class="number">16</span>;    </span><br><span class="line">    <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n </span><br><span class="line">    + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>loadFactor加载因子</strong><br>默认0.75f<br>loadFactor加载因子是控制数组存放数据的疏密程度（0<del>1，稀疏</del>密集）<br>冲突数&lt;6转链表，&gt;=8转红黑树（因为泊松分布）</p>
-<h5 id="put过程"><a href="#put过程" class="headerlink" title="put过程"></a>put过程</h5><p><strong>put过程：（1.8）</strong><br>1、 如果定位到的数组位置没有元素 就直接插入。<br>2、如果定位到的数组位置有元素就和要插入的key比较，如果key相同就直接覆盖，如果key不相同，就判断p是否是一个树节点，如果是就调用e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value)将元素添加进入。如果不是就遍历链表插入(插入的是链表尾部)。<br><strong>put过程：（1.7）</strong><br>1、如果定位到的数组位置没有元素 就直接插入。<br>2、如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的key比较，如果key相同就直接覆盖，不同就采用头插法插入元素。</p>
-<h5 id="resize过程"><a href="#resize过程" class="headerlink" title="resize过程"></a>resize过程</h5><p><strong>resize</strong><br><strong>1.7：</strong><br>初始化一个大小为（capacity x 2）的新数组，将原数组在hash至新数组中。<br>链表元素会倒置<br><strong>1.8：</strong><br>桶中存在一个链表，需要将链表重新整理到新表当中，因为（(newCap = oldCap &lt;&lt; 1）所以原节点的索引值要么和原来一样，要么就是原(索引+oldCap)和JDK 1.7中实现不同这里不存在rehash</p>
-<h5 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h5><p><strong>迭代器快速失效</strong></p>
-<h4 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h4><h5 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">float</span> loadFactor,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">boolean</span> accessOrder)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>Hashmap实体中添加before，after（双向链表）实现有序访问<br>LinkedHashMap添加head、tail（头指针和尾指针）<br>protected boolean removeEldestEntry(Map.Entry&lt;K,V&gt; eldest)<br><strong>accessOrder</strong><br>accessOrder: 为 false按插入顺序访问；为true，按访问顺序访问（LRU算法）</p>
-<h5 id="LRU实现"><a href="#LRU实现" class="headerlink" title="LRU实现"></a>LRU实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">removeEldestEntry</span><span class="params">(Map.Entry&lt;K,V&gt; eldest)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>可以重载该方法自己定义策略</p>
-<h5 id="是否线程安全"><a href="#是否线程安全" class="headerlink" title="是否线程安全"></a>是否线程安全</h5><p>不安全，迭代器快速失效</p>
-<h4 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h4><h5 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h5><ul>
-<li>客户端连接服务器保存的一些信息</li>
-<li>缓存信息<h5 id="hashmap与weakhashmap对比"><a href="#hashmap与weakhashmap对比" class="headerlink" title="hashmap与weakhashmap对比"></a>hashmap与weakhashmap对比</h5><img src="/2019/09/24/Map/hashmap_and_weakhashmap.png" alt="hashmap_and_weakhashmap.png"></li>
-</ul>
-<h5 id="回收原理"><a href="#回收原理" class="headerlink" title="回收原理"></a>回收原理</h5><p>gc判断是否为弱引用（有没被其他代码使用）若是回收key，将value放入<em>referencequeue</em>；<br>weakhashmap会在下一次调用<em>expungeStaleEntries</em>方法时回收value；</p>
-<h5 id="是否线程安全-1"><a href="#是否线程安全-1" class="headerlink" title="是否线程安全"></a>是否线程安全</h5><p>不安全，迭代器快速失效</p>
-<h4 id="IdentityHashMap"><a href="#IdentityHashMap" class="headerlink" title="IdentityHashMap"></a>IdentityHashMap</h4><h5 id="用途-1"><a href="#用途-1" class="headerlink" title="用途"></a>用途</h5><p>序列化<br>深度复制<br>记录对象代理<br>记录jvm对象</p>
-<h5 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">IdentityHashMap</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">IdentityHashMap</span><span class="params">(Map&lt;? extends K,? extends V&gt; m)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">IdentityHashMap</span><span class="params">(<span class="keyword">int</span> expectedMaxSize)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>默认大小32<br>默认加载因子为0.67</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">capacity</span><span class="params">(<span class="keyword">int</span> expectedMaxSize)</span> </span>&#123;    </span><br><span class="line"><span class="comment">// assert expectedMaxSize &gt;= 0;    </span></span><br><span class="line"><span class="keyword">return</span>        </span><br><span class="line">(expectedMaxSize &gt; MAXIMUM_CAPACITY / <span class="number">3</span>) ? MAXIMUM_CAPACITY :        (expectedMaxSize &lt;= <span class="number">2</span> * MINIMUM_CAPACITY / <span class="number">3</span>) ? MINIMUM_CAPACITY </span><br><span class="line">:        Integer.highestOneBit(expectedMaxSize + (expectedMaxSize &lt;&lt; <span class="number">1</span>));&#125;</span><br></pre></td></tr></table></figure>
-
-<p>初始化一个数组（大小为给定值转为最接近2的幂的值且大于等于给定数 * 2）</p>
-<h5 id="处理hash冲突"><a href="#处理hash冲突" class="headerlink" title="处理hash冲突"></a>处理hash冲突</h5><p>使用线性探针法，如下图：<br><img src="/2019/09/24/Map/resolving_collision_by_linear_probing.png" alt="resolving_collision_by_linear_probing.png"></p>
-<h5 id="判定相等"><a href="#判定相等" class="headerlink" title="判定相等"></a>判定相等</h5><p>与hashmap不同<br>identityhashmap是判断key1和key2的地址是否相等的（key1==key2）</p>
-<h5 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h5><p>元素达到阈值时，会进行扩容处理，扩容后会旧表中的元素重新hash到新表中</p>
-<h5 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h5><p>在删除一个元素后会进行一次closeDeletion处理，重新分配元素的位置</p>
-<h4 id="EnumMap"><a href="#EnumMap" class="headerlink" title="EnumMap"></a>EnumMap</h4><p>EnumMap代替叙述索引<br>key不能为null，value可以</p>
-<h3 id="SortedMap和NavigableMap"><a href="#SortedMap和NavigableMap" class="headerlink" title="SortedMap和NavigableMap"></a>SortedMap和NavigableMap</h3><h4 id="SortedMap接口"><a href="#SortedMap接口" class="headerlink" title="SortedMap接口"></a>SortedMap接口</h4><p>sortedmap接口已经被navigablemap接口替代（与sortedset和mavigableset类似）</p>
-<h6 id="获取第一个元素和最后一个元素"><a href="#获取第一个元素和最后一个元素" class="headerlink" title="获取第一个元素和最后一个元素"></a>获取第一个元素和最后一个元素</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">K <span class="title">firstKey</span><span class="params">()</span></span></span><br><span class="line"><span class="function">K <span class="title">lastKey</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-
-<p>若无元素，返回  NoSuchElementException</p>
-<h5 id="获取比较器"><a href="#获取比较器" class="headerlink" title="获取比较器"></a>获取比较器</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;? <span class="keyword">super</span> K&gt; comparator()</span><br></pre></td></tr></table></figure>
-
-<h5 id="查看子元素"><a href="#查看子元素" class="headerlink" title="查看子元素"></a>查看子元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SortedMap&lt;K,V&gt; <span class="title">subMap</span><span class="params">(K fromKey, K toKey)</span></span></span><br><span class="line"><span class="function">SortedMap&lt;K,V&gt; <span class="title">headMap</span><span class="params">(K toKey)</span></span></span><br><span class="line"><span class="function">SortedMap&lt;K,V&gt; <span class="title">tailMap</span><span class="params">(K fromKey)</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="NavigableMap接口"><a href="#NavigableMap接口" class="headerlink" title="NavigableMap接口"></a>NavigableMap接口</h4><p><img src="/2019/09/24/Map/navigablemap.png" alt="navigablemap.png"></p>
-<h5 id="获取第一个元素和最后一个元素-1"><a href="#获取第一个元素和最后一个元素-1" class="headerlink" title="获取第一个元素和最后一个元素"></a>获取第一个元素和最后一个元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map.<span class="function">Entry&lt;K,V&gt; <span class="title">pollFirstEntry</span><span class="params">()</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">pollLastEntry</span><span class="params">()</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">firstEntry</span><span class="params">()</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">lastEntry</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="获取范围视图"><a href="#获取范围视图" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableMap&lt;K,V&gt; <span class="title">subMap</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">K fromKey, <span class="keyword">boolean</span> fromInclusive, K toKey, <span class="keyword">boolean</span> toInclusive)</span></span></span><br><span class="line"><span class="function">NavigableMap&lt;K,V&gt; <span class="title">headMap</span><span class="params">(K toKey, <span class="keyword">boolean</span> inclusive)</span></span></span><br><span class="line"><span class="function">NavigableMap&lt;K,V&gt; <span class="title">tailMap</span><span class="params">(K fromKey, <span class="keyword">boolean</span> inclusive)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>可以选择是否包括上界和下界</p>
-<h5 id="获取最近比配的数据"><a href="#获取最近比配的数据" class="headerlink" title="获取最近比配的数据"></a>获取最近比配的数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map.<span class="function">Entry&lt;K,V&gt; <span class="title">ceilingEntry</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">K <span class="title">ceilingKey</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">floorEntry</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">K <span class="title">floorKey</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">higherEntry</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">K <span class="title">higherKey</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">Map.Entry&lt;K,V&gt; <span class="title">lowerEntry</span><span class="params">(K Key)</span></span></span><br><span class="line"><span class="function">K <span class="title">lowerKey</span><span class="params">(K Key)</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="Navigating-the-Map"><a href="#Navigating-the-Map" class="headerlink" title="Navigating the Map"></a>Navigating the Map</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableMap&lt;K,V&gt; <span class="title">descendingMap</span><span class="params">()</span> <span class="comment">// return a reverse-order view of the map</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;K&gt; <span class="title">descendingKeySet</span><span class="params">()</span> <span class="comment">// return a reverse-order key set</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;K&gt; <span class="title">navigableKeySet</span><span class="params">()</span> <span class="comment">// return a forward-order key set</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h4><h5 id="构造-1"><a href="#构造-1" class="headerlink" title="构造"></a>构造</h5><p>除了空构造和通过map构造，treemap还提供了一下两种构造函数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> K&gt; comparator)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(SortedMap&lt;K, ? extends V&gt; m)</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="其他特性"><a href="#其他特性" class="headerlink" title="其他特性"></a>其他特性</h5><p>get ,put和 remove操作花费O(log n) 时间复杂度<br>迭代器快速失效</p>
-<h3 id="ConcurrentMap接口"><a href="#ConcurrentMap接口" class="headerlink" title="ConcurrentMap接口"></a>ConcurrentMap接口</h3><p>为高并发场景下的Map提供原子操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">V <span class="title">putIfAbsent</span><span class="params">(K key, V value)</span></span></span><br><span class="line"><span class="function"><span class="comment">// associate key with value only if key is not currently present.</span></span></span><br><span class="line"><span class="function"><span class="comment">// return the old value (may be null) if the key was present,</span></span></span><br><span class="line"><span class="function"><span class="comment">// otherwise return null</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object key, Object value)</span></span></span><br><span class="line"><span class="function"><span class="comment">// remove key only if it is currently mapped to value. Returns</span></span></span><br><span class="line"><span class="function"><span class="comment">// true if the value was removed, false otherwise</span></span></span><br><span class="line"><span class="function">V <span class="title">replace</span><span class="params">(K key, V value)</span></span></span><br><span class="line"><span class="function"><span class="comment">// replace entry for key only if it is currently present. Return</span></span></span><br><span class="line"><span class="function"><span class="comment">// the old value (may be null) if the key was present, otherwise</span></span></span><br><span class="line"><span class="function"><span class="comment">// return null</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">replace</span><span class="params">(K key, V oldValue, V newValue)</span></span></span><br><span class="line"><span class="function"><span class="comment">// replace entry for key only if it is currently mapped to oldValue.</span></span></span><br><span class="line"><span class="function"><span class="comment">// return true if the value was replaced, false otherwise</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h4><h6 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h6><p><strong>1.7</strong><br>采用乐观读+分段锁实现 来 实现ConcurrentMap<br>ConcurrentHashMap 是由 Segment 数组结构和 HashEntry 数组结构组成<br>Segment 实现了 ReentrantLock<br><strong>1.8</strong><br>采用CAS和synchronized来保证并发安全。数据结构跟HashMap1.8的结构类似，数组+链表/红黑二叉树。synchronized只锁定当前链表或红黑二叉树的首节点，这样只要hash不冲突，就不会产生并发，效率又提升N倍</p>
-<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>默认容量16<br>在获取size()会导致全锁，开销大<br>构造函数提供并发级别控制    </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ConcurrentHashMap()</span><br><span class="line">ConcurrentHashMap(<span class="keyword">int</span> initialCapacity)</span><br><span class="line">ConcurrentHashMap(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span><br><span class="line">ConcurrentHashMap(</span><br><span class="line"><span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor, <span class="keyword">int</span> concurrencyLevel)</span><br><span class="line">ConcurrentHashMap(Map&lt;? extends K,? extends V&gt; m)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ConcurrentNavigableMap"><a href="#ConcurrentNavigableMap" class="headerlink" title="ConcurrentNavigableMap"></a>ConcurrentNavigableMap</h3><p><img src="/2019/09/24/Map/concurrentnavigablemap.png" alt="concurrentnavigablemap.png"></p>
-<h4 id="ConcurrentSkipListMap"><a href="#ConcurrentSkipListMap" class="headerlink" title="ConcurrentSkipListMap"></a>ConcurrentSkipListMap</h4><p>是concurrentskiplistset的底层实现get ,  put , and  remove 花费O(log n) 时间<br>迭代器快速失效</p>
-<h3 id="Map实现的对比"><a href="#Map实现的对比" class="headerlink" title="Map实现的对比"></a>Map实现的对比</h3><p><img src="/2019/09/24/Map/comparative.png" alt="comparative.png"></p>
-
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/24/Map/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/24/Map/" data-id="ck0xxh3cy000mxswk4ws8gt31" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Map/">Map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-List" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/09/23/List/" class="article-date">
-  <time datetime="2019-09-23T14:56:47.000Z" itemprop="datePublished">2019-09-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java基础/">java基础</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/23/List/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
     
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/23/List/">List</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/23/List/" itemprop="url">List</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-23T22:56:47+08:00">2019-09-23</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>[TOC]</p>
+      
+
+      
+        
+          <p>[TOC]</p>
 <h3 id="List方法"><a href="#List方法" class="headerlink" title="List方法"></a>List方法</h3><p><img src="/2019/09/23/List/list_method.png" alt="list_method"></p>
-<h4 id="位置访问方法"><a href="#位置访问方法" class="headerlink" title="位置访问方法"></a>位置访问方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> <span class="comment">// add element e at given index</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span></span></span><br><span class="line"><span class="function"><span class="comment">// add contents of c at given index</span></span></span><br><span class="line"><span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="comment">// return element with given index</span></span></span><br><span class="line"><span class="function">E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> <span class="comment">// remove element with given index</span></span></span><br><span class="line"><span class="function">E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E e)</span> <span class="comment">// replace element with given index by e</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(Object o)</span> <span class="comment">// return index of first occurrence of o</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(Object o)</span> <span class="comment">// return index of last occurrence of o</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="范围查看"><a href="#范围查看" class="headerlink" title="范围查看"></a>范围查看</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">List&lt;E&gt; <span class="title">subList</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span></span></span><br><span class="line"><span class="function"><span class="comment">// return a view of a portion of the list</span></span></span><br></pre></td></tr></table></figure>
-
-<p>ps:subList返回视图，对视图的修改会作用与母List，<br>若对母List做修改，访问子视图会报ConcurrentModificationException</p>
-<h4 id="List迭代器"><a href="#List迭代器" class="headerlink" title="List迭代器"></a>List迭代器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> <span class="comment">// return a ListIterator for this list,</span></span></span><br><span class="line"><span class="function"><span class="comment">// initially positioned at index 0</span></span></span><br><span class="line"><span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">(<span class="keyword">int</span> indx)</span></span></span><br><span class="line"><span class="function"><span class="comment">// return a ListIterator for this list,</span></span></span><br><span class="line"><span class="function"><span class="comment">// initially positioned at index indxs</span></span></span><br></pre></td></tr></table></figure>
-
-<p>ListIterator新增加的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span></span>; <span class="comment">// 在游标 前面 插入一个元素（注意，是前面）</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">hasPrevious</span><span class="params">()</span></span>; <span class="comment">// 判断游标前面是否有元素</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">nextIndex</span><span class="params">()</span></span>; <span class="comment">// 返回游标后边元素的索引位置，初始为 0 </span></span><br><span class="line"><span class="function">E <span class="title">previous</span><span class="params">()</span></span>; <span class="comment">// 返回游标前面的元素，同时游标前移一位。游标前没有元素就报 java.util.NoSuchElementException 的错</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">previousIndex</span><span class="params">()</span></span>; <span class="comment">// 返回游标前面元素的位置，初始时为 -1，同时报 java.util.NoSuchElementException 错;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(E e)</span></span>; <span class="comment">// r更新迭代器最后一次操作的元素为 E，也就是更新最后一次调用 next() 或者 previous() 返回的元素。当没有迭代，也就是没有调用 next() 或者 previous() 直接调用 set 时会报 java.lang.IllegalStateException 错</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="List实现"><a href="#List实现" class="headerlink" title="List实现"></a>List实现</h3><p><img src="/2019/09/23/List/implementation_of_the_list_interface.png" alt="implementation_of_the_list_interface.png"></p>
-<h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><p>get、set快<br>remove、insert慢<br>初始化空间：默认10，复制其他数组（开辟该数组空间的）110%<br>扩展（原数组大小+原数组大小/2）</p>
-<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><p>末尾以外的地方添加、删除快<br>大量查找（随机访问）慢</p>
-<h4 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h4><p>写时复制，适用于读多写少</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addIfAbsent()<span class="comment">//添加元素如果不存在</span></span><br></pre></td></tr></table></figure>
-
-<p>线程安全</p>
-<h3 id="List实现对比"><a href="#List实现对比" class="headerlink" title="List实现对比"></a>List实现对比</h3><p><img src="/2019/09/23/List/Comparative.png" alt="Comparative.png"></p>
-
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/23/List/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/23/List/" data-id="ck0xxh3br0000xswkyxuewsuw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/List/">List</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Set" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/09/19/Set/" class="article-date">
-  <time datetime="2019-09-19T14:32:52.000Z" itemprop="datePublished">2019-09-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java基础/">java基础</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/Set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
     
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/19/Set/">Set</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/19/Set/" itemprop="url">Set</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-19T22:32:52+08:00">2019-09-19</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>[TOC]</p>
+      
+
+      
+        
+          <p>[TOC]</p>
 <h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>没有重复元素</p>
 <h3 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h3><p><img src="en-resource://database/1532:1" alt="1abc80d2d08e303c5ab69d9c5fdf0f3e.png"><br>6个实现类，2个接口</p>
-<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p><img src="en-resource://database/1536:1" alt="a392f32129c1edb88d9d1a26edbafa45.png"><br>保持不重复的对象（可以是任意的，不用统一）<br>底层使用hashmap实现，存对象为键（保证不重复），值为标志位<br>遍历使用hashmap的 <em>map.keySet().iterator();</em> 方法<br>常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）<br>并发：不同步、线程不安全、迭代器快速失效</p>
-<h4 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h4><p><img src="en-resource://database/1534:1" alt="6caa1471e96464e2d816219b96e28d51.png"></p>
-<p>底层使用LinkedHashMap实现<br>链表使用双向链表实现（有序）</p>
-<p>用于有序消除重复元素（重写hashcode与equal）<br>并发：不同步、线程不安全、迭代器快速失效</p>
-<h4 id="CopyOnWriteArraySet"><a href="#CopyOnWriteArraySet" class="headerlink" title="CopyOnWriteArraySet"></a>CopyOnWriteArraySet</h4><p>底层使用CopyOnWriteArrayList实现<br>不适用于大量查找和插入操作<br>适用于：白名单，黑名单，商品类目的访问和更新场景</p>
-<p>并发：线程安全、读写分离迭代器</p>
-<h4 id="EnumSet"><a href="#EnumSet" class="headerlink" title="EnumSet"></a>EnumSet</h4><p><strong>初始化</strong><br>enumset为抽象类，不可直接new<br>底层使用RegularEnumSet（long-64），或者JumboEnumSet（long数组）如果枚举值个数小于等于64，则静态工厂方法中创建的就是RegularEnumSet，大于64的话就是JumboEnumSet。<br><strong>静态构造函数</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;E extends Enum&lt;E&gt;&gt; <span class="function">EnumSet&lt;E&gt; <span class="title">of</span><span class="params">(E first, E... rest)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing the specified elements</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">range</span><span class="params">(E from, E to)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all of the elements in</span></span></span><br><span class="line"><span class="function"><span class="comment">// the range defined by the two specified endpoints</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">allOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all elements in elementType</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">noneOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set of elementType, initially empty</span></span></span><br></pre></td></tr></table></figure>
-
-<p>适用于求 交集、并集、补集</p>
-<h3 id="有序Set和巡航Set"><a href="#有序Set和巡航Set" class="headerlink" title="有序Set和巡航Set"></a>有序Set和巡航Set</h3><h4 id="SortSet接口"><a href="#SortSet接口" class="headerlink" title="SortSet接口"></a>SortSet接口</h4><p><img src="en-resource://database/1538:1" alt="01d6f8c763b2a1d84f4fdf7f130465cc.png"><br>实现类为TreeSet</p>
-<h5 id="获取第一个和最后一个元素"><a href="#获取第一个和最后一个元素" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">first</span><span class="params">()</span> <span class="comment">// return the first element in the set</span></span></span><br><span class="line"><span class="function">E <span class="title">last</span><span class="params">()</span> <span class="comment">// return the last element in the set</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;? <span class="keyword">super</span> E&gt; comparator()</span><br></pre></td></tr></table></figure>
-
-<h5 id="获取范围视图"><a href="#获取范围视图" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取大于等于fromElement,小于toElement</span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取小于toElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取大于等于fromElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement)</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="NavigableSet接口"><a href="#NavigableSet接口" class="headerlink" title="NavigableSet接口"></a>NavigableSet接口</h4><p><img src="en-resource://database/1542:1" alt="f2fbe9232cde309279fddfef7ceb5559.png"></p>
-<h5 id="获取第一个和最后一个元素-1"><a href="#获取第一个和最后一个元素-1" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">pollFirst</span><span class="params">()</span> <span class="comment">// retrieve and remove the first (lowest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br><span class="line"><span class="function">E <span class="title">pollLast</span><span class="params">()</span> <span class="comment">// retrieve and remove the last (highest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="获取范围视图-1"><a href="#获取范围视图-1" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> fromInclusive,E toElement, <span class="keyword">boolean</span> toInclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="获取最近比配的数据"><a href="#获取最近比配的数据" class="headerlink" title="获取最近比配的数据"></a>获取最近比配的数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">ceiling</span><span class="params">(E e)</span> <span class="comment">// return the least element in this set greater than</span></span></span><br><span class="line"><span class="function"><span class="comment">// or equal to e, or null if there is no such element（大于等于）</span></span></span><br><span class="line"><span class="function">E <span class="title">floor</span><span class="params">(E e)</span> <span class="comment">// return the greatest element in this set less than</span></span></span><br><span class="line"><span class="function"><span class="comment">// or equal to e, or null if there is no such element（小于等于）</span></span></span><br><span class="line"><span class="function">E <span class="title">higher</span><span class="params">(E e)</span> <span class="comment">// return the least element in this set strictly</span></span></span><br><span class="line"><span class="function"><span class="comment">// greater than e, or null if there is no such element（大于）</span></span></span><br><span class="line"><span class="function">E <span class="title">lower</span><span class="params">(E e)</span> <span class="comment">// return the greatest element in this set strictly</span></span></span><br><span class="line"><span class="function"><span class="comment">// less than e, or null if there is no such element（小于）</span></span></span><br></pre></td></tr></table></figure>
-
-<h5 id="导航反转有序数"><a href="#导航反转有序数" class="headerlink" title="导航反转有序数"></a>导航反转有序数</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">descendingSet</span><span class="params">()</span> <span class="comment">// return a reverse-order view of</span></span></span><br><span class="line"><span class="function"><span class="comment">// the elements in this set</span></span></span><br><span class="line"><span class="function">Iterator&lt;E&gt; <span class="title">descendingIterator</span><span class="params">()</span> <span class="comment">// return a reverse-order iterator</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>底层算法使用 红黑树<br>使用TreeMap类实现<br>有序</p>
-<p>并发：不同步、线程不安全、迭代器快速失效</p>
-<h4 id="ConcurrentSkipListSet"><a href="#ConcurrentSkipListSet" class="headerlink" title="ConcurrentSkipListSet"></a>ConcurrentSkipListSet</h4><p><strong>插入图解：</strong><br><img src="en-resource://database/1548:1" alt="2ff58bfe7e8bd09ffe55cc3017967bb2.png"><br><strong>查找图解</strong><br><img src="en-resource://database/1550:1" alt="52f8a83aa1f77ea8e7664aa539d72989.png"></p>
-<p>底层ConcurrentSkipListMap实现<br>随机因子（用于随机选择level1的个数<br>线程安全的）<br>确定层数：level设置默认为1，然后对rnd进行一个右位移操作后在与1进行与操作后来确定需要分为几层<br>cas保证线程安全</p>
-<h3 id="Set的比较实现"><a href="#Set的比较实现" class="headerlink" title="Set的比较实现"></a>Set的比较实现</h3><p><img src="en-resource://database/1552:1" alt="a3950673d395fea3c4a59a95f8a728b0.png"></p>
-
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/19/Set/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/19/Set/" data-id="ck0xxh3c00001xswk6z89wtmw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Set/">Set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-hexo-command" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/09/hexo-command/" class="article-date">
-  <time datetime="2019-08-09T12:39:22.000Z" itemprop="datePublished">2019-08-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/备忘录/">备忘录</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/hexo-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
     
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/hexo-command/">hexo command</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/09/hexo-command/" itemprop="url">hexo command</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-09T20:39:22+08:00">2019-08-09</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/备忘录/" itemprop="url" rel="index">
+                    <span itemprop="name">备忘录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* hexo new &quot;postName&quot; #新建文章</span><br><span class="line">* hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">* hexo generate #生成静态页面至public目录</span><br><span class="line">* hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">* hexo deploy #部署到GitHub</span><br><span class="line">* hexo help  # 查看帮助</span><br><span class="line">* hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
+      
+
+      
+        
+          <h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* hexo new &quot;postName&quot; #新建文章</span><br><span class="line">* hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">* hexo generate #生成静态页面至public目录</span><br><span class="line">* hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">* hexo deploy #部署到GitHub</span><br><span class="line">* hexo help  # 查看帮助</span><br><span class="line">* hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
 
 <h3 id="缩写："><a href="#缩写：" class="headerlink" title="缩写："></a>缩写：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure>
 
 <h3 id="组合命令："><a href="#组合命令：" class="headerlink" title="组合命令："></a>组合命令：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g #生成并本地预览</span><br><span class="line">hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2019/08/09/hexo-command/#more">Read More</a>
-          </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/09/hexo-command/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/09/hexo-command/" data-id="ck0xxh3c80004xswkia3gvjhe" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/demo/">demo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/09/hello-world/" class="article-date">
-  <time datetime="2019-08-09T12:21:31.937Z" itemprop="datePublished">2019-08-09</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/hello-world/">Hello World</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/09/hello-world/" itemprop="url">Hello World</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-09T20:21:31+08:00">2019-08-09</time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+      
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+      
+        
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/09/hello-world/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/09/hello-world/" data-id="ck0xxh3ca0005xswkw335ovrq" class="article-share-link">Share</a>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
       
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
   
-</article>
-
-
   
-
-
-</section>
-        
-          <aside id="sidebar">
   
+  </article>
+
+
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java基础/">java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/备忘录/">备忘录</a></li></ul>
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-
-  
+  <aside id="sidebar" class="sidebar">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/List/">List</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Map/">Map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Set/">Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">wutian</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
     </div>
-  </div>
+  </aside>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/List/" style="font-size: 10px;">List</a> <a href="/tags/Map/" style="font-size: 10px;">Map</a> <a href="/tags/Set/" style="font-size: 10px;">Set</a> <a href="/tags/demo/" style="font-size: 10px;">demo</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/集合/" style="font-size: 20px;">集合</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/09/24/Map/">Map</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/23/List/">List</a>
-          </li>
-        
-          <li>
-            <a href="/2019/09/19/Set/">Set</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/09/hexo-command/">hexo command</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/09/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wutian</span>
+
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 wutian<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
   
-</nav>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
+    
 
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.0"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
