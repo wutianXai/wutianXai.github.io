@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="集合,Map,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -73,26 +73,14 @@
 
 
 
-<meta name="description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
-<meta name="keywords" content="集合,Map">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Map">
-<meta property="og:url" content="http://yoursite.com/2019/09/24/Map/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="tags">
+<meta property="og:url" content="http://yoursite.com/tags/index.html">
 <meta property="og:site_name" content="wutian的小破站">
-<meta property="og:description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
 <meta property="og:locale" content="CN">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/Map.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/the_structure_of_map_implementation.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/hashmap_and_weakhashmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/resolving_collision_by_linear_probing.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/navigablemap.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/concurrentnavigablemap.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/Map/comparative.png">
-<meta property="og:updated_time" content="2019-09-24T15:14:19.539Z">
+<meta property="og:updated_time" content="2019-09-25T02:48:27.990Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Map">
-<meta name="twitter:description" content="[TOC] Map特性键值对不继承Collection键唯一 Map方法">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/24/Map/Map.png">
+<meta name="twitter:title" content="tags">
 
 
 
@@ -124,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/24/Map/">
+  <link rel="canonical" href="http://yoursite.com/tags/">
 
 
 
@@ -351,11 +339,11 @@
       
         <p>[TOC]</p>
 <h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>没有重复元素</p>
-<h3 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h3><p><img src="en-resource://database/1532:1" alt="1abc80d2d08e303c5ab69d9c5fdf0f3e.png"><br>6个实现类，2个接口</p>
+<h3 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h3><p><img src="/2019/09/19/Set/implementtation_of_the_set_interface.png" alt="implementtation_of_the_set_interface.png"><br>6个实现类，2个接口</p>
 <a id="more"></a>
 
-<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p><img src="en-resource://database/1536:1" alt="a392f32129c1edb88d9d1a26edbafa45.png"><br>保持不重复的对象（可以是任意的，不用统一）<br>底层使用hashmap实现，存对象为键（保证不重复），值为标志位<br>遍历使用hashmap的 <em>map.keySet().iterator();</em> 方法<br>常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）<br>并发：不同步、线程不安全、迭代器快速失效</p>
-<h4 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h4><p><img src="en-resource://database/1534:1" alt="6caa1471e96464e2d816219b96e28d51.png"></p>
+<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><p><img src="/2019/09/19/Set/a_hash_table_with_chained_overflow.png" alt="a_hash_table_with_chained_overflow.png"><br>保持不重复的对象（可以是任意的，不用统一）<br>底层使用hashmap实现，存对象为键（保证不重复），值为标志位<br>遍历使用hashmap的 <em>map.keySet().iterator();</em> 方法<br>常用于 消除重复元素（需要重写 hashcode（）和equal（）方法）<br>并发：不同步、线程不安全、迭代器快速失效</p>
+<h4 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h4><p><img src="/2019/09/19/Set/a_linked_hash_table.png" alt="a_linked_hash_table.png"></p>
 <p>底层使用LinkedHashMap实现<br>链表使用双向链表实现（有序）</p>
 <p>用于有序消除重复元素（重写hashcode与equal）<br>并发：不同步、线程不安全、迭代器快速失效</p>
 <h4 id="CopyOnWriteArraySet"><a href="#CopyOnWriteArraySet" class="headerlink" title="CopyOnWriteArraySet"></a>CopyOnWriteArraySet</h4><p>底层使用CopyOnWriteArrayList实现<br>不适用于大量查找和插入操作<br>适用于：白名单，黑名单，商品类目的访问和更新场景</p>
@@ -364,14 +352,14 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;E extends Enum&lt;E&gt;&gt; <span class="function">EnumSet&lt;E&gt; <span class="title">of</span><span class="params">(E first, E... rest)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing the specified elements</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">range</span><span class="params">(E from, E to)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all of the elements in</span></span></span><br><span class="line"><span class="function"><span class="comment">// the range defined by the two specified endpoints</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">allOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set initially containing all elements in elementType</span></span></span><br><span class="line"><span class="function">&lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; <span class="title">noneOf</span><span class="params">(Class&lt;E&gt; elementType)</span></span></span><br><span class="line"><span class="function"><span class="comment">// create a set of elementType, initially empty</span></span></span><br></pre></td></tr></table></figure>
 
 <p>适用于求 交集、并集、补集</p>
-<h3 id="有序Set和巡航Set"><a href="#有序Set和巡航Set" class="headerlink" title="有序Set和巡航Set"></a>有序Set和巡航Set</h3><h4 id="SortSet接口"><a href="#SortSet接口" class="headerlink" title="SortSet接口"></a>SortSet接口</h4><p><img src="en-resource://database/1538:1" alt="01d6f8c763b2a1d84f4fdf7f130465cc.png"><br>实现类为TreeSet</p>
+<h3 id="有序Set和巡航Set"><a href="#有序Set和巡航Set" class="headerlink" title="有序Set和巡航Set"></a>有序Set和巡航Set</h3><h4 id="SortSet接口"><a href="#SortSet接口" class="headerlink" title="SortSet接口"></a>SortSet接口</h4><p><img src="/2019/09/19/Set/sortedset.png" alt="sortedset.png"><br>实现类为TreeSet</p>
 <h5 id="获取第一个和最后一个元素"><a href="#获取第一个和最后一个元素" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">first</span><span class="params">()</span> <span class="comment">// return the first element in the set</span></span></span><br><span class="line"><span class="function">E <span class="title">last</span><span class="params">()</span> <span class="comment">// return the last element in the set</span></span></span><br></pre></td></tr></table></figure>
 
 <h5 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;? <span class="keyword">super</span> E&gt; comparator()</span><br></pre></td></tr></table></figure>
 
 <h5 id="获取范围视图"><a href="#获取范围视图" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取大于等于fromElement,小于toElement</span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取小于toElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement)</span></span></span><br><span class="line"><span class="function"><span class="comment">//获取大于等于fromElement</span></span></span><br><span class="line"><span class="function">SortedSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement)</span></span></span><br></pre></td></tr></table></figure>
 
-<h4 id="NavigableSet接口"><a href="#NavigableSet接口" class="headerlink" title="NavigableSet接口"></a>NavigableSet接口</h4><p><img src="en-resource://database/1542:1" alt="f2fbe9232cde309279fddfef7ceb5559.png"></p>
+<h4 id="NavigableSet接口"><a href="#NavigableSet接口" class="headerlink" title="NavigableSet接口"></a>NavigableSet接口</h4><p><img src="/2019/09/19/Set/navigableset.png" alt="navigableset.png"></p>
 <h5 id="获取第一个和最后一个元素-1"><a href="#获取第一个和最后一个元素-1" class="headerlink" title="获取第一个和最后一个元素"></a>获取第一个和最后一个元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">pollFirst</span><span class="params">()</span> <span class="comment">// retrieve and remove the first (lowest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br><span class="line"><span class="function">E <span class="title">pollLast</span><span class="params">()</span> <span class="comment">// retrieve and remove the last (highest) element,</span></span></span><br><span class="line"><span class="function"><span class="comment">// or return null if this set is empty</span></span></span><br></pre></td></tr></table></figure>
 
 <h5 id="获取范围视图-1"><a href="#获取范围视图-1" class="headerlink" title="获取范围视图"></a>获取范围视图</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">subSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> fromInclusive,E toElement, <span class="keyword">boolean</span> toInclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">headSet</span><span class="params">(E toElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br><span class="line"><span class="function">NavigableSet&lt;E&gt; <span class="title">tailSet</span><span class="params">(E fromElement, <span class="keyword">boolean</span> inclusive)</span></span></span><br></pre></td></tr></table></figure>
@@ -382,9 +370,9 @@
 
 <h4 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h4><p>底层算法使用 红黑树<br>使用TreeMap类实现<br>有序</p>
 <p>并发：不同步、线程不安全、迭代器快速失效</p>
-<h4 id="ConcurrentSkipListSet"><a href="#ConcurrentSkipListSet" class="headerlink" title="ConcurrentSkipListSet"></a>ConcurrentSkipListSet</h4><p><strong>插入图解：</strong><br><img src="en-resource://database/1548:1" alt="2ff58bfe7e8bd09ffe55cc3017967bb2.png"><br><strong>查找图解</strong><br><img src="en-resource://database/1550:1" alt="52f8a83aa1f77ea8e7664aa539d72989.png"></p>
+<h4 id="ConcurrentSkipListSet"><a href="#ConcurrentSkipListSet" class="headerlink" title="ConcurrentSkipListSet"></a>ConcurrentSkipListSet</h4><p><strong>插入图解：</strong><br><img src="/2019/09/19/Set/modifying_a_linked_list.png" alt="modifying_a_linked_list.png"><br><strong>查找图解</strong><br><img src="/2019/09/19/Set/searching_a_skip_list.png" alt="searching_a_skip_list.png"></p>
 <p>底层ConcurrentSkipListMap实现<br>随机因子（用于随机选择level1的个数<br>线程安全的）<br>确定层数：level设置默认为1，然后对rnd进行一个右位移操作后在与1进行与操作后来确定需要分为几层<br>cas保证线程安全</p>
-<h3 id="Set的比较实现"><a href="#Set的比较实现" class="headerlink" title="Set的比较实现"></a>Set的比较实现</h3><p><img src="en-resource://database/1552:1" alt="a3950673d395fea3c4a59a95f8a728b0.png"></p>
+<h3 id="Set的比较实现"><a href="#Set的比较实现" class="headerlink" title="Set的比较实现"></a>Set的比较实现</h3><p><img src="/2019/09/19/Set/comparative.png" alt="comparative.png"></p>
 
       
     </div>
@@ -781,6 +769,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
   
