@@ -74,13 +74,13 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="wutian的小破站">
 <meta property="og:locale" content="CN">
-<meta property="og:updated_time" content="2019-09-25T02:48:27.990Z">
+<meta property="og:updated_time" content="2019-09-25T02:53:58.259Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="categories">
 
 
 
@@ -112,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/">
+  <link rel="canonical" href="http://yoursite.com/categories/">
 
 
 
@@ -235,6 +235,200 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/Queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wutian">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wutian的小破站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/26/Queue/" itemprop="url">Queue</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-26T10:59:43+08:00">2019-09-26</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<h2 id="Queue特性及方法"><a href="#Queue特性及方法" class="headerlink" title="Queue特性及方法"></a>Queue特性及方法</h2><p><strong>框架</strong><br><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cqueue_collection_framework.png" alt></p>
+<p><strong>特性:</strong><br>按元素添加的顺序排列（FIFO、FILO、优先级等）<br>queue添加的方法：<br><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cqueue.png" alt></p>
+<h3 id="添加一个元素进入队列"><a href="#添加一个元素进入队列" class="headerlink" title="添加一个元素进入队列"></a>添加一个元素进入队列</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">offer</span> <span class="params">(E e)</span> <span class="comment">// insert the given element if possible</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="取一个元素"><a href="#取一个元素" class="headerlink" title="取一个元素"></a>取一个元素</h3><p>若遇到栈空，会报错：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">element</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the head element</span></span></span><br><span class="line"><span class="function">E <span class="title">remove</span><span class="params">()</span> <span class="comment">// retrieve and remove the head element</span></span></span><br></pre></td></tr></table></figure>
+
+<p>若遇到栈空，会返回null：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">peek</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the head element</span></span></span><br><span class="line"><span class="function">E <span class="title">poll</span><span class="params">()</span> <span class="comment">// retrieve and remove the head element</span></span></span><br></pre></td></tr></table></figure>
+
+<p>所以尽量不要在队列中添加null元素（正常不让添加null，但在LinkedList实现下允许null）</p>
+<p>不建议使用迭代器（因为在多线程会出问题，顺序也会变）</p>
+<h2 id="Queue接口实现"><a href="#Queue接口实现" class="headerlink" title="Queue接口实现"></a>Queue接口实现</h2><h3 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a>PriorityQueue</h3><p>线程不安全<br>按自然顺序或者按比较器排序（底层堆排）</p>
+<h4 id="PriorityQueue构造"><a href="#PriorityQueue构造" class="headerlink" title="PriorityQueue构造"></a>PriorityQueue构造</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PriorityQueue() <span class="comment">// natural ordering, default initial capacity (11)</span></span><br><span class="line">PriorityQueue(Collection&lt;? extends E&gt; c)</span><br><span class="line"><span class="comment">// natural ordering of elements taken from c, unless</span></span><br><span class="line"><span class="comment">// c is a PriorityQueue or SortedSet, in which case</span></span><br><span class="line"><span class="comment">// copy c's ordering</span></span><br><span class="line">PriorityQueue(<span class="keyword">int</span> initialCapacity)</span><br><span class="line"><span class="comment">// natural ordering, specified initial capacity</span></span><br><span class="line">PriorityQueue(<span class="keyword">int</span> initialCapacity, Comparator&lt;? <span class="keyword">super</span> E&gt; comparator)</span><br><span class="line"><span class="comment">// Comparator ordering, specified initial capacity</span></span><br><span class="line">PriorityQueue(PriorityQueue&lt;? extends E&gt; c)</span><br><span class="line"><span class="comment">// ordering and elements copied from c</span></span><br><span class="line">PriorityQueue(SortedSet&lt;? extends E&gt; c)</span><br><span class="line"><span class="comment">// ordering and elements copied from c</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="PriorityQueue实现原理"><a href="#PriorityQueue实现原理" class="headerlink" title="PriorityQueue实现原理"></a>PriorityQueue实现原理</h4><p>底层为二叉树（与普通二叉数有两点不同）</p>
+<ul>
+<li>上层元素大于下层元素</li>
+<li>除底层外其他层必须是满的<br>添加时先左在右，添加后调整，如下：<br><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cadding_to_a_priorityqueue.png" alt><br>出栈时，最后一个元素置顶，在调整，如下：<br><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cadding_to_a_priorityqueue2.png" alt><h4 id="多线程表现"><a href="#多线程表现" class="headerlink" title="多线程表现"></a>多线程表现</h4>线程不安全，不适合并发下使用<br>一个线程安全的版本：PriorityBlockingQueue<h4 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h4>入栈、出栈、移除 （需要堆排一次）：O（logn）<br>查询 （  remove(Object) 和 contains）：O（n）<br>查看栈顶元素：O（1）<h3 id="ConcurrentLinkedQueue"><a href="#ConcurrentLinkedQueue" class="headerlink" title="ConcurrentLinkedQueue"></a>ConcurrentLinkedQueue</h3>无边界，线程安全，FIFO的有序队列<br>基于volatile关键字、CAS的“wait－free”（常规无等待）来实现（硬件指令平台相关）线程安全<br>链表结构<br>插入在尾部，尾部指针与尾部元素相距hops距离时，重置尾部指针<h2 id="BlockingQueue接口"><a href="#BlockingQueue接口" class="headerlink" title="BlockingQueue接口"></a>BlockingQueue接口</h2>大部分线程安全的queue都是实现该接口<br>多用于生产者消费者模式，系统中常用的场景为打印缓存队列<h3 id="接口方法"><a href="#接口方法" class="headerlink" title="接口方法"></a>接口方法</h3><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cblockingdeque.png" alt><h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e, <span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function"><span class="comment">// insert e, waiting up to the timeout</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="comment">// add e, waiting as long as necessary</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="移除一个元素"><a href="#移除一个元素" class="headerlink" title="移除一个元素"></a>移除一个元素</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">poll</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function"><span class="comment">// retrieve and remove the head, waiting up to the timeout</span></span></span><br><span class="line"><span class="function">E <span class="title">take</span><span class="params">()</span> <span class="comment">// retrieve and remove the head of this queue, waiting</span></span></span><br><span class="line"><span class="function"><span class="comment">// as long as necessary</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询queue中的内容"><a href="#查询queue中的内容" class="headerlink" title="查询queue中的内容"></a>查询queue中的内容</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">drainTo</span><span class="params">(Collection&lt;? <span class="keyword">super</span> E&gt; c)</span></span></span><br><span class="line"><span class="function"><span class="comment">// clear the queue into c</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">drainTo</span><span class="params">(Collection&lt;? <span class="keyword">super</span> E&gt; c, <span class="keyword">int</span> maxElements)</span></span></span><br><span class="line"><span class="function"><span class="comment">// clear at most the specified number of elements into c</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">remainingCapacity</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// return the number of elements that would be accepted</span></span></span><br><span class="line"><span class="function"><span class="comment">// without blocking, or Integer.MAX_VALUE if unboundeds</span></span></span><br></pre></td></tr></table></figure>
+
+<p>BlockingQueue保证实现类是线程安全的和原子性，但是不保证批量操作（继承自collection-addall，containsall，retainall，removeall——除非另外实现）</p>
+<h3 id="接口实现"><a href="#接口实现" class="headerlink" title="接口实现"></a>接口实现</h3><h4 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h4><p>原理：链表<br>构造：可以指定空间，没指定默认时为  <strong>Integer.MAX_VALUE</strong><br>并发： 线程安全，FIFO队列、迭代器弱一致性<br>性能：添加，移除O(1),查询O(n)</p>
+<h4 id="ArrayBlockingQueue"><a href="#ArrayBlockingQueue" class="headerlink" title="ArrayBlockingQueue"></a>ArrayBlockingQueue</h4><p>原理：环形数组（原始实现是ArrayList）<br>构造：必须指定空间<br>并发： 线程安全，FIFO队列、迭代器弱一致性<br>性能：添加，移除O(1),查询O(n)</p>
+<h4 id="PriorityBlocingQueue"><a href="#PriorityBlocingQueue" class="headerlink" title="PriorityBlocingQueue"></a>PriorityBlocingQueue</h4><p>原理：优先级队列（安全版本）<br>构造：与 优先级队列 相同<br>并发： 线程安全，FIFO队列、迭代器快速失效（可手动转数组处理）<br>性能：与 优先级队列 相同</p>
+<h4 id="DelayQueue"><a href="#DelayQueue" class="headerlink" title="DelayQueue"></a>DelayQueue</h4><p>原理：优先级队列<br>等待时间越久越前、若都在计时，poll返回null，peek返回第一个计时的数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Delayed</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">Delayed</span>&gt; </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getDelay</span><span class="params">(TimeUnit unit)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造：与 优先级队列 相同<br>并发： 线程安全，FIFO队列、迭代器快速失效（可手动转数组处理）<br>性能：与 优先级队列 相同</p>
+<h4 id="SynchronousQueue"><a href="#SynchronousQueue" class="headerlink" title="SynchronousQueue"></a>SynchronousQueue</h4><p>原理：<br>公平——TransferQueue<br>非公平——TransferStack<br>一对一匹配模式<br>构造：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SynchronousQueue()</span><br><span class="line">SynchronousQueue(<span class="keyword">boolean</span> fair)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Deque接口"><a href="#Deque接口" class="headerlink" title="Deque接口"></a>Deque接口</h2><p>双端队列，不允许优先级排序<br>可以用作stack</p>
+<h3 id="接口方法-1"><a href="#接口方法-1" class="headerlink" title="接口方法"></a>接口方法</h3><p><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cdeque.png" alt></p>
+<h4 id="类似collection的方法"><a href="#类似collection的方法" class="headerlink" title="类似collection的方法"></a>类似collection的方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(E e)</span> <span class="comment">// insert e at the head if there is enough space</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addLast</span><span class="params">(E e)</span> <span class="comment">// insert e at the tail if there is enough space</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(E e)</span> <span class="comment">// insert e at the head if there is enough space</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">removeFirstOccurrence</span><span class="params">(Object o)</span></span>;<span class="comment">// remove the first occurrence of o</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">removeLastOccurrence</span><span class="params">(Object o)</span></span>;<span class="comment">// remove the last occurrence of o</span></span><br><span class="line"><span class="function">Iterator&lt;E&gt; <span class="title">descendingIterator</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// get an iterator, returning deque elements in</span></span></span><br><span class="line"><span class="function"><span class="comment">// reverse order</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类似Queue的方法"><a href="#类似Queue的方法" class="headerlink" title="类似Queue的方法"></a>类似Queue的方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">offerFirst</span><span class="params">(E e)</span> <span class="comment">// insert e at the head if the deque has space</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">offerLast</span><span class="params">(E e)</span> <span class="comment">// insert e at the tail if the deque has space</span></span></span><br></pre></td></tr></table></figure>
+
+<p>以下方法在空队列时放回null：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">peekFirst</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the first element</span></span></span><br><span class="line"><span class="function">E <span class="title">peekLast</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the last element</span></span></span><br><span class="line"><span class="function">E <span class="title">pollFirst</span><span class="params">()</span> <span class="comment">// retrieve and remove the first element</span></span></span><br><span class="line"><span class="function">E <span class="title">pollLast</span><span class="params">()</span> <span class="comment">// retrieve and remove the last element</span></span></span><br></pre></td></tr></table></figure>
+
+<p>以下方法在空队列时抛出异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">E <span class="title">getFirst</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the first element</span></span></span><br><span class="line"><span class="function">E <span class="title">getLast</span><span class="params">()</span> <span class="comment">// retrieve but do not remove the last element</span></span></span><br><span class="line"><span class="function">E <span class="title">removeFirst</span><span class="params">()</span> <span class="comment">// retrieve and remove the first element</span></span></span><br><span class="line"><span class="function">E <span class="title">removeLast</span><span class="params">()</span> <span class="comment">// retrieve and remove the last element</span></span></span><br><span class="line"><span class="function">E <span class="title">pop</span><span class="params">()</span> <span class="comment">// retrieve and remove the first element</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Deque实现"><a href="#Deque实现" class="headerlink" title="Deque实现"></a>Deque实现</h3><h4 id="ArrayDeque（推荐）"><a href="#ArrayDeque（推荐）" class="headerlink" title="ArrayDeque（推荐）"></a>ArrayDeque（推荐）</h4><p>原理：环形队列(类似与ArrayBlockingQueue)<br>并发：迭代器快速失效<br>性能：添加移除O(1)</p>
+<h4 id="LinkedList（不推荐）"><a href="#LinkedList（不推荐）" class="headerlink" title="LinkedList（不推荐）"></a>LinkedList（不推荐）</h4><p><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Ca_doubly_linkedlist.png" alt><br>原理：跳表<br>并发：迭代器快速失效，线程不安全<br>性能：添加移除O(1)、随机访问O(n)</p>
+<h2 id="BlockingDeque接口"><a href="#BlockingDeque接口" class="headerlink" title="BlockingDeque接口"></a>BlockingDeque接口</h2><p>在BlockingQueue基础上体检的接口：<br><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Cblockingdeque.png" alt><br>原理:两个队列，前一个满载执行，消费者忙不过来；后一个空队列，消费者闲的，这时后队列的消费者去前一个队列尾部拿任务消费，从而提高效率</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="LinkedBlockingDeque"><a href="#LinkedBlockingDeque" class="headerlink" title="LinkedBlockingDeque"></a>LinkedBlockingDeque</h4><p>原理：双向链表<br>并发：迭代器弱一致性，线程安全<br>性能：添加移除O(1)、查找O(n)</p>
+<h2 id="Queue实现对比"><a href="#Queue实现对比" class="headerlink" title="Queue实现对比"></a>Queue实现对比</h2><p><img src="/2019/09/26/Queue/E:%5Chexo%5Csource_posts%5CQueue%5Ccomparative.png" alt></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -989,7 +1183,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1011,7 +1205,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
